@@ -1,0 +1,15 @@
+{
+    "livreurs" : 
+    [
+        {
+            "nom" : "Richard",
+            "prenom" : "Corentin",
+            "identifiant" : "crichard"
+        },
+        {
+            "nom" : "Charieau",
+            "prenom" : "Maxime",
+            "identifiant" : "mcharieau"
+        }
+    ]
+}
