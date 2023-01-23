@@ -5,3 +5,4 @@ from django.db import models
 class Entrepot(models.Model):
     name = models.CharField(max_length=30)
     packages = models.ManyToManyField('Package', through = 'PackageEntrepot')
+    
