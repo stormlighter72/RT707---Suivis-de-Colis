@@ -12,7 +12,8 @@ nom_fichier = "infos_livreur.json"
 ID = input("Veuillez renseigner votre identifiant : ")    
 if ID == nom_fichier["livreurs"]["identifiant"] :
     password = input("Taper votre mot de passe : ")
-    if password == nom_fichier["livreurs"]["password"]
+    print("SUUUUUU !!!!")
+    # if password == nom_fichier["livreurs"]["password"] :
 else :
     print("Erreur : Identifiant Incorrect")
 

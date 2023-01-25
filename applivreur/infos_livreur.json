@@ -4,7 +4,8 @@
         {
             "nom" : "Richard",
             "prenom" : "Corentin",
-            "identifiant" : "crichard"
+            "identifiant" : "crichard",
+            "password" : "Ouaisouais"
         },
         {
             "nom" : "Charieau",
