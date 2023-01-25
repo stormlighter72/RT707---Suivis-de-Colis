@@ -29,6 +29,8 @@ services:
     networks:
       entreprise:
         ipv4_address: 192.168.100.150
+      interco_mqtt-web:
+        ipv4_address: 10.1.1.150
 ####################################################################
   server-amqp:
     build: server-amqp
@@ -45,6 +47,14 @@ services:
     networks:
       entreprise:
         ipv4_address: 192.168.100.200
+      interco_applivreur-amqp:
+        ipv4_address: 10.2.1.200
+####################################################################
+  myalpine:
+    image: alpine
+    command: tail -F anything
+    networks:
+      - interco_applivreur-amqp
 ####################################################################
   server-mqtt:
     build: server-mqtt
@@ -59,6 +69,16 @@ services:
     networks:
       entrepot_1:
         ipv4_address: 192.168.11.100
+      interco_mqtt-web:
+        ipv4_address: 10.1.1.100
+####################################################################
+  # connectedobject:
+  #     build: connectedobject
+  #     container_name: IoT
+  #     depends_on:
+  #       - server-mqtt
+  #     networks:
+  #       - entrepot_1
 ####################################################################
   # server-mqtt-2:
   #   build: server-mqtt-2
@@ -73,14 +93,17 @@ services:
   #   networks:
   #     - entrepot_2
 ####################################################################
-  # applivreur:
-  #   build: applivreur
-  #   container_name: applivreur
-  #   command: sh -c "python app.py"
-  #   depends_on:
-  #     - database
-  #   volumes:
-  #     - applivreur:/app
+  applivreur:
+    build: applivreur
+    container_name: applivreur
+    command: sh -c "python app.py"
+    depends_on:
+      - database
+    volumes:
+      - applivreur:/app
+    networks:
+      interco_applivreur-amqp:
+        ipv4_address: 10.2.1.150
 
 #############################LesVolumes#############################
 volumes:
@@ -112,3 +135,17 @@ networks:
       config:
       - subnet: "192.168.12.0/24"
         gateway: "192.168.12.254"
+
+  interco_mqtt-web:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: "10.1.1.0/24"
+        gateway: "10.1.1.254"
+
+  interco_applivreur-amqp:
+      driver: bridge
+      ipam:
+        config:
+        - subnet: "10.2.1.0/24"
+          gateway: "10.2.1.254"

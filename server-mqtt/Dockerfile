@@ -1,2 +1,2 @@
-FROM eclipse-mosquitto:2.0.15-openssl
+FROM eclipse-mosquitto
 WORKDIR /mqtt
