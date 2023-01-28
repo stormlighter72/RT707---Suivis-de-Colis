@@ -1,25 +1,20 @@
-import socket
-import json
+#pip3 install folium
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host, port = "127.0.0.1", 2222
+import folium
+from folium import PolyLine
 
-client_socket.connect((host, port))
+# Création de la carte
+map = folium.Map(location=[48.85, 2.35], zoom_start=13)
 
+# Liste des coordonnées pour tracer le chemin
+coordinates = [[48.85, 2.35], [48.86, 2.36], [48.87, 2.37], [48.88, 2.38], [48.89, 2.39], [49.236275, 4.063538]]
 
-nom_fichier = "infos_livreur.json"
+# Tracer le chemin sur la carte
+PolyLine(coordinates, color="red", weight=2.5, opacity=1).add_to(map)
 
-ID = input("Veuillez renseigner votre identifiant : ")    
-if ID == nom_fichier["livreurs"]["identifiant"] :
-    password = input("Taper votre mot de passe : ")
-    print("SUUUUUU !!!!")
-    # if password == nom_fichier["livreurs"]["password"] :
-else :
-    print("Erreur : Identifiant Incorrect")
+# Ajout des marqueurs pour chaque coordonnée
+for coord in coordinates:
+    folium.Marker(location=coord, icon=folium.Icon(icon_url='')).add_to(map)
 
-
-
-if __name__ == "__main__" :
-    while True :
-        message = input(f"{ID} > ")
-        client_socket.send(f"{ID} > {message}".encode("utf-8"))
+# Afficher la carte
+map.save("chemin.html")

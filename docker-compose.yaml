@@ -54,18 +54,17 @@ services:
     image: alpine
     command: tail -F anything
     networks:
-      - interco_applivreur-amqp
+      - entrepot_1
 ####################################################################
   server-mqtt:
     build: server-mqtt
     container_name: mosquitto
     depends_on:
       - database
-    ports:
-      - "1883:1883"
-      - "9001:9001"
     volumes:
       - mqtt:/mqtt
+    ports:
+      - "1883:1883"
     networks:
       entrepot_1:
         ipv4_address: 192.168.11.100
@@ -93,19 +92,19 @@ services:
   #   networks:
   #     - entrepot_2
 ####################################################################
-  applivreur:
-    build: applivreur
-    container_name: applivreur
-    command: sh -c "python app.py"
-    depends_on:
-      - database
-    ports:
-      - "2222:2222"
-    volumes:
-      - applivreur:/app
-    networks:
-      interco_applivreur-amqp:
-        ipv4_address: 10.2.1.150
+  # applivreur:
+  #   build: applivreur
+  #   container_name: applivreur
+  #   command: sh -c "python app.py"
+  #   depends_on:
+  #     - database
+  #   ports:
+  #     - "2222:2222"
+  #   volumes:
+  #     - applivreur:/app
+  #   networks:
+  #     interco_applivreur-amqp:
+  #       ipv4_address: 10.2.1.150
 
 #############################LesVolumes#############################
 volumes:
